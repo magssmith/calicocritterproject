@@ -1,0 +1,108 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    background-color: rgb(250, 239, 241);
+}
+
+ol{
+    font-size: larger;
+    margin-left: 250px;
+    margin-right: 250px;
+    font-weight: 550;
+}
+
+.list{
+    text-align: left;
+   
+}
+.size{
+    font-weight: 550;
+    font-size: larger;
+}
+.size2{
+    font-weight: 500;
+    font-size: medium;
+}
+iframe{
+    border: dashed 12px rgb(241,88,153);
+    width: 800px;
+    height: 500px;
+}
+/* .tip{
+
+    color: rgb(241,88,153);
+    color: rgb(160, 53, 167);
+} */
+.cord{
+    color: rgb(160, 53, 167);
+}
+.title{
+    color: rgb(241,88,153);
+    font-size: 60px;
+}
+.attend{
+    color: rgb(241,116,88);
+}
+.tip{
+    color: rgb(160, 53, 167);
+    font-style: italic;
+    font-weight: 600;
+}
+.tap{
+    color: rgb(160, 53, 167);
+    font-weight: 600;
+    font-size: larger;
+}
+.top{
+    color: rgb(85,160,199);
+    font-weight: 600;
+    font-size: larger;}
+.why{
+    color: rgb(85,160,199);
+}
+.host{
+    color: rgb(241,88,153);
+    font-weight: 700;
+    font-size: x-large;
+    
+}
+.bullet{
+    color: rgb(160, 53, 167);
+    font-weight: 500;
+}
+img{
+    border: solid 12px rgb(255, 255, 255);
+}
+.width{
+    width: 1450x;
+   margin-left: 125px;
+   margin-right: 125px;
+}
+
+.liink{
+   position: absolute;
+   top: 20px;
+   right: 20px;
+    color: rgb(160, 53, 167);
+    font-weight: bold;
+    font-size: 25px;
+ 
+}
+.liiink{
+    position: absolute;
+    top: 20px;
+    right: 95px;
+     color: rgb(160, 53, 167);
+     font-weight: bold;
+     font-size: 25px;
+  
+ }
+ .liiiink{
+    position: absolute;
+    top: 20px;
+    right: 205px;
+     color: rgb(160, 53, 167);
+     font-weight: bold;
+     font-size: 25px;
+  
+ }

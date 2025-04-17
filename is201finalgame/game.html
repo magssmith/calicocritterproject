@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dress Up Critter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        
+        /* UPDATED Pink Color Scheme */
+        body {
+            background-color: #FFF0F5; /* LavenderBlush background */
+            color: #8B456A; /* Darker Pink/Mauve text */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .game-container {
+            background-color: #FFDAE9; /* Light Pink container */
+            border: 4px solid #FFB6C1; /* LightPink border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .choice-button {
+            background-color: #FFB6C1; /* LightPink buttons */
+            color: #8B456A; /* Match body text */
+            border: 2px solid #FF69B4; /* HotPink border */
+            transition: all 0.2s ease-in-out;
+            min-width: 100px;
+        }
+        .choice-button:hover {
+            background-color: #FF69B4; /* HotPink hover */
+            color: #FFF0F5; /* LavenderBlush text on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .choice-button.selected {
+            background-color: #81B29A; /* Keep Teal selected background */
+            color: #FFFBEB;
+            border-color: #DB7093; /* PaleVioletRed border for selected */
+        }
+        .critter-display {
+            width: 250px;
+            height: 350px;
+            background-color: #FFF0F5; /* Match body background */
+            border: 2px dashed #FFC0CB; /* Pink dashed border */
+            position: relative;
+            overflow: hidden;
+        }
+        .critter-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .critter-layer svg { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .step-section { display: none; }
+        .step-section.active { display: block; }
+        .final-message { color: #3A5A40; font-weight: bold; } /* Keep green for contrast */
+        #final-title { color: #DB7093; font-size: 1.75rem; font-weight: bold; } /* PaleVioletRed */
+        .face-eyes { fill: #333; }
+        .face-nose { fill: #F08080; }
+        .face-whiskers { stroke: #555; stroke-width: 1px; fill: none; }
+        .right{
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-family: 'Courier New', Courier, monospace;
+          font-weight: bold;
+          color: rgb(160, 53, 167);
+          font-size: 25px;
+          text-decoration: underline;
+        }
+    </style>
+
+    <br>
+</head>
+<div><a href="../is201finalscratch/scratch.html" class="right">Scratch</a></div>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="game-container w-full max-w-4xl p-6 rounded-lg text-center">
+        <h1 id="main-title" class="text-3xl font-bold mb-6 text-[#DB7093]">Dress Up Critter</h1>
+
+        <div class="flex flex-col md:flex-row gap-6">
+
+            <div class="flex-shrink-0 mx-auto md:mx-0">
+                <h2 class="text-xl mb-2">Your Critter:</h2>
+                <div id="critter-display" class="critter-display rounded-md mx-auto">
+                    <div id="animal-layer" class="critter-layer z-10"></div>
+                    <div id="bottoms-layer" class="critter-layer z-20"></div>
+                    <div id="top-layer" class="critter-layer z-30"></div>
+                    <div id="accessory-layer" class="critter-layer z-40"></div>
+                </div>
+            </div>
+
+            <div class="flex-grow">
+                <h2 id="step-title" class="text-xl mb-4">Step 1: Choose your Animal</h2>
+
+                <div id="steps-container">
+                    <div id="step-animal" class="step-section active">
+                         <div class="flex flex-wrap justify-center gap-3">
+                            <button class="choice-button p-3 rounded-md" onclick="selectAnimal('cat')">Orange Cat</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectAnimal('dog')">Brown Dog</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectAnimal('bunny')">White Bunny</button>
+                        </div>
+                    </div>
+                    <div id="step-bottoms" class="step-section">
+                         <p class="mb-3">Choose bottoms:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button class="choice-button p-3 rounded-md" onclick="selectBottoms('maxi-skirt')">White Maxi Skirt</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectBottoms('midi-skirt')">Pink Midi Skirt</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectBottoms('mini-skirt')">Black Mini Skirt</button>
+                        </div>
+                    </div>
+                    <div id="step-top" class="step-section">
+                         <p class="mb-3">Choose a top:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button class="choice-button p-3 rounded-md" onclick="selectTop('smiley')">Smiley Tee</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectTop('blouse')">White Blouse</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectTop('gray-tee')">Gray Tee</button>
+                        </div>
+                    </div>
+                    <div id="step-accessory" class="step-section">
+                         <p class="mb-3">Choose an accessory:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button class="choice-button p-3 rounded-md" onclick="selectAccessory('bow')">Bow</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectAccessory('daisy')">Daisy</button>
+                            <button class="choice-button p-3 rounded-md" onclick="selectAccessory('necklace')">Pearl Necklace</button>
+                        </div>
+                    </div>
+                    <div id="step-final" class="step-section text-center">
+                         <p id="final-message" class="final-message text-xl my-4"></p>
+                         <div id="play-again-prompt">
+                             <p class="mb-3">Play Again?</p>
+                             <button class="choice-button p-3 rounded-md mr-2" onclick="handlePlayAgain(true)">Yes</button>
+                             <button class="choice-button p-3 rounded-md" onclick="handlePlayAgain(false)">No</button>
+                         </div>
+                         <div id="final-title-container" class="hidden mt-4">
+                             <h1 id="final-title">Dress Up Critter</h1>
+                         </div>
+                     </div>
+                </div> </div> </div> </div> <script>
+        // --- Game State (same as before) ---
+        let currentStep = 'animal';
+        let selections = { animal: null, bottoms: null, top: null, accessory: null };
+
+        // --- DOM Elements (same as before) ---
+        const stepTitle = document.getElementById('step-title');
+        const stepsContainer = document.getElementById('steps-container');
+        const animalLayer = document.getElementById('animal-layer');
+        const bottomsLayer = document.getElementById('bottoms-layer');
+        const topLayer = document.getElementById('top-layer');
+        const accessoryLayer = document.getElementById('accessory-layer');
+        const finalMessage = document.getElementById('final-message');
+        const playAgainPrompt = document.getElementById('play-again-prompt');
+        const finalTitleContainer = document.getElementById('final-title-container');
+        const mainTitle = document.getElementById('main-title');
+
+        // --- V6 SVG Definitions ---
+        const svgData = {
+            // --- Animals (Same as V5) ---
+            animals: {
+                 cat: `<svg viewBox="0 0 100 160"> <path d="M35,155 C30,140 25,110 30,85 C30,65 40,55 50,55 C60,55 70,65 70,85 C75,110 70,140 65,155 Z" fill="#FFA07A"/> <circle cx="50" cy="35" r="25" fill="#FFA07A"/> <path d="M30,20 C35,5 45,10 50,20 Z" fill="#FFA07A"/> <path d="M70,20 C65,5 55,10 50,20 Z" fill="#FFA07A"/> <path d="M33,20 C37,10 45,13 48,20 Z" fill="#FFC0CB"/> <path d="M67,20 C63,10 55,13 52,20 Z" fill="#FFC0CB"/> <path d="M30,70 C15,75 15,95 25,100 C30,95 30,75 30,70 Z" fill="#FFA07A"/> <path d="M70,70 C85,75 85,95 75,100 C70,95 70,75 70,70 Z" fill="#FFA07A"/> <path d="M35,155 C30,160 40,165 45,160 C45,155 40,150 35,155 Z" fill="#FFA07A"/> <path d="M65,155 C70,160 60,165 55,160 C55,155 60,150 65,155 Z" fill="#FFA07A"/> <circle cx="42" cy="35" r="3" class="face-eyes"/> <circle cx="58" cy="35" r="3" class="face-eyes"/> <path d="M48,43 Q50,47 52,43" class="face-nose" stroke="#F08080" stroke-width="1" fill="#F08080"/> <line x1="35" y1="40" x2="25" y2="38" class="face-whiskers"/> <line x1="35" y1="43" x2="25" y2="43" class="face-whiskers"/> <line x1="35" y1="46" x2="25" y2="48" class="face-whiskers"/> <line x1="65" y1="40" x2="75" y2="38" class="face-whiskers"/> <line x1="65" y1="43" x2="75" y2="43" class="face-whiskers"/> <line x1="65" y1="46" x2="75" y2="48" class="face-whiskers"/> </svg>`,
+                 dog: `<svg viewBox="0 0 100 160"> <path d="M35,155 C30,140 25,110 30,85 C30,65 40,55 50,55 C60,55 70,65 70,85 C75,110 70,140 65,155 Z" fill="#A0522D"/> <circle cx="50" cy="35" r="25" fill="#A0522D"/> <path d="M25,30 C15,40 20,55 35,50 Z" fill="#A0522D"/> <path d="M75,30 C85,40 80,55 65,50 Z" fill="#A0522D"/> <path d="M30,70 C15,75 15,95 25,100 C30,95 30,75 30,70 Z" fill="#A0522D"/> <path d="M70,70 C85,75 85,95 75,100 C70,95 70,75 70,70 Z" fill="#A0522D"/> <path d="M35,155 C30,160 40,165 45,160 C45,155 40,150 35,155 Z" fill="#A0522D"/> <path d="M65,155 C70,160 60,165 55,160 C55,155 60,150 65,155 Z" fill="#A0522D"/> <circle cx="42" cy="35" r="3" class="face-eyes"/> <circle cx="58" cy="35" r="3" class="face-eyes"/> <ellipse cx="50" cy="43" rx="4" ry="3" class="face-nose" fill="#555"/> </svg>`,
+                 bunny: `<svg viewBox="0 0 100 160"> <path d="M35,155 C30,140 25,110 30,85 C30,65 40,55 50,55 C60,55 70,65 70,85 C75,110 70,140 65,155 Z" fill="#E0E0E0"/> <circle cx="50" cy="35" r="25" fill="#E0E0E0"/> <path d="M35,20 C30,-10 45,-10 45,20 Z" fill="#E0E0E0"/> <path d="M65,20 C70,-10 55,-10 55,20 Z" fill="#E0E0E0"/> <path d="M38,15 C35,-2 43,-2 43,15 Z" fill="#FFC0CB"/> <path d="M62,15 C65,-2 57,-2 57,15 Z" fill="#FFC0CB"/> <path d="M30,70 C15,75 15,95 25,100 C30,95 30,75 30,70 Z" fill="#E0E0E0"/> <path d="M70,70 C85,75 85,95 75,100 C70,95 70,75 70,70 Z" fill="#E0E0E0"/> <path d="M35,155 C30,160 40,165 45,160 C45,155 40,150 35,155 Z" fill="#E0E0E0"/> <path d="M65,155 C70,160 60,165 55,160 C55,155 60,150 65,155 Z" fill="#E0E0E0"/> <circle cx="42" cy="35" r="3" class="face-eyes"/> <circle cx="58" cy="35" r="3" class="face-eyes"/> <path d="M48,43 Q50,45 52,43" class="face-nose" stroke="#F08080" stroke-width="1" fill="#F08080"/> <line x1="38" y1="40" x2="28" y2="38" class="face-whiskers"/> <line x1="38" y1="43" x2="28" y2="43" class="face-whiskers"/> <line x1="62" y1="40" x2="72" y2="38" class="face-whiskers"/> <line x1="62" y1="43" x2="72" y2="43" class="face-whiskers"/> </svg>`
+            },
+            // --- Bottoms (Adjusted Mini Skirt - Longer/Wider) ---
+            bottoms: {
+                'maxi-skirt': `<svg viewBox="0 0 100 160"> <path d="M30,85 C40,82 60,82 70,85 L70,90 L30,90 Z" fill="#F0F0F0"/> <path d="M30,90 C20,100 10,140 25,158 L75,158 C90,140 80,100 70,90 Z" fill="#FFFFFF"/> </svg>`,
+                'midi-skirt': `<svg viewBox="0 0 100 160"> <path d="M30,85 C40,82 60,82 70,85 L70,90 L30,90 Z" fill="#FBA0AF"/> <path d="M30,90 C20,100 15,130 25,145 L75,145 C85,130 80,100 70,90 Z" fill="#FFC0CB"/> </svg>`,
+                // Mini skirt made longer and wider at bottom
+                'mini-skirt': `<svg viewBox="0 0 100 160">
+                                <path d="M28,85 C40,82 60,82 72,85 L72,90 L28,90 Z" fill="#222"/>
+                                <path d="M28,90 C22,100 25,115 30,125 L70,125 C75,115 78,100 72,90 Z" fill="#333333"/>
+                            </svg>`
+            },
+            // --- Tops (Same as V5) ---
+            tops: {
+                 smiley: `<svg viewBox="0 0 100 160"> <g transform="translate(0, 5)"> <path d="M30,60 C25,65 25,85 30,90 L70,90 C75,85 75,65 70,60 C60,55 40,55 30,60 Z" fill="#F0E68C"/> <path d="M25,65 C20,70 20,80 25,85 L30,85 L30,65 Z" fill="#F0E68C"/> <path d="M75,65 C80,70 80,80 75,85 L70,85 L70,65 Z" fill="#F0E68C"/> <circle cx="50" cy="75" r="10" fill="yellow" stroke="black" stroke-width="0.5"/> <circle cx="45" cy="72" r="1.5" fill="black"/> <circle cx="55" cy="72" r="1.5" fill="black"/> <path d="M43 78 Q 50 83 57 78" stroke="black" stroke-width="0.5" fill="none"/> </g> </svg>`,
+                 blouse: `<svg viewBox="0 0 100 160"> <g transform="translate(0, 5)"> <path d="M30,60 C25,65 25,85 30,90 L70,90 C75,85 75,65 70,60 C65,55 55,53 50,53 C45,53 35,55 30,60 Z" fill="#FFFFFF" stroke="#EEE" stroke-width="0.5"/> <path d="M25,65 C15,70 15,85 25,90 L30,90 L30,65 Z" fill="#FFFFFF" stroke="#EEE" stroke-width="0.5"/> <path d="M75,65 C85,70 85,85 75,90 L70,90 L70,65 Z" fill="#FFFFFF" stroke="#EEE" stroke-width="0.5"/> <path d="M40,55 Q50,60 60,55 L55,60 L45,60 Z" fill="#FFFFFF" stroke="#DDD" stroke-width="0.5"/> </g> </svg>`,
+                 'gray-tee': `<svg viewBox="0 0 100 160"> <g transform="translate(0, 5)"> <path d="M30,60 C25,65 25,85 30,90 L70,90 C75,85 75,65 70,60 C60,55 40,55 30,60 Z" fill="#B0C4DE"/> <path d="M25,65 C20,70 20,80 25,85 L30,85 L30,65 Z" fill="#B0C4DE"/> <path d="M75,65 C80,70 80,80 75,85 L70,85 L70,65 Z" fill="#B0C4DE"/> </g> </svg>`
+            },
+             // --- Accessories (Same as V5) ---
+            accessories: {
+                 bow: `<svg viewBox="0 0 100 160"> <g transform="translate(72, 18) rotate(15)"> <circle cx="-8" cy="-3" r="8" fill="#FF69B4"/> <circle cx="8" cy="-3" r="8" fill="#FF69B4"/> <circle cx="0" cy="0" r="4" fill="#FF1493"/> </g> </svg>`,
+                 daisy: `<svg viewBox="0 0 100 160"> <g transform="translate(28, 18) rotate(-15)"> <defs> <path id="petal" d="M0,-12 C 5,-10 5,0 0,0 C -5,0 -5,-10 0,-12 Z" fill="white" stroke="#DDD" stroke-width="0.5"/> </defs> <circle cx="0" cy="0" r="5" fill="yellow"/> <use href="#petal" transform="rotate(0)"/> <use href="#petal" transform="rotate(60)"/> <use href="#petal" transform="rotate(120)"/> <use href="#petal" transform="rotate(180)"/> <use href="#petal" transform="rotate(240)"/> <use href="#petal" transform="rotate(300)"/> </g> </svg>`,
+                 necklace: `<svg viewBox="0 0 100 160"> <g transform="translate(0, 8)"> <path d="M38,50 Q50,60 62,50" fill="none" stroke="#E0E0E0" stroke-width="2"/> <circle cx="50" cy="59" r="3" fill="#F5F5F5" stroke="#DDD" stroke-width="0.5"/> <circle cx="43" cy="56" r="2.5" fill="#F5F5F5" stroke="#DDD" stroke-width="0.5"/> <circle cx="57" cy="56" r="2.5" fill="#F5F5F5" stroke="#DDD" stroke-width="0.5"/> </g> </svg>`
+            }
+        };
+
+        // --- Functions (Logic remains the same) ---
+
+        function showStep(stepName) {
+            currentStep = stepName;
+            document.querySelectorAll('.step-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            const activeSection = document.getElementById(`step-${stepName}`);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+            switch(stepName) {
+                case 'animal': stepTitle.textContent = 'Step 1: Choose your Animal'; break;
+                case 'bottoms': stepTitle.textContent = 'Step 2: Choose Bottoms'; break;
+                case 'top': stepTitle.textContent = 'Step 3: Choose a Top'; break;
+                case 'accessory': stepTitle.textContent = 'Step 4: Choose an Accessory'; break;
+                case 'final': stepTitle.textContent = 'All Dressed Up!'; break;
+            }
+            highlightSelection();
+        }
+
+        function updateCritterDisplay() {
+            animalLayer.innerHTML = selections.animal ? svgData.animals[selections.animal] : '';
+            bottomsLayer.innerHTML = selections.bottoms ? svgData.bottoms[selections.bottoms] : '';
+            topLayer.innerHTML = selections.top ? svgData.tops[selections.top] : '';
+            accessoryLayer.innerHTML = selections.accessory ? svgData.accessories[selections.accessory] : '';
+        }
+
+         function highlightSelection() {
+             document.querySelectorAll('.choice-button').forEach(btn => btn.classList.remove('selected'));
+             if (selections.animal) {
+                 const btn = document.querySelector(`#step-animal button[onclick="selectAnimal('${selections.animal}')"]`);
+                 if(btn) btn.classList.add('selected');
+             }
+              if (selections.bottoms) {
+                 const btn = document.querySelector(`#step-bottoms button[onclick="selectBottoms('${selections.bottoms}')"]`);
+                  if(btn) btn.classList.add('selected');
+             }
+              if (selections.top) {
+                 const btn = document.querySelector(`#step-top button[onclick="selectTop('${selections.top}')"]`);
+                  if(btn) btn.classList.add('selected');
+             }
+              if (selections.accessory) {
+                 const btn = document.querySelector(`#step-accessory button[onclick="selectAccessory('${selections.accessory}')"]`);
+                  if(btn) btn.classList.add('selected');
+             }
+         }
+
+        function selectAnimal(type) {
+            selections = { animal: type, bottoms: null, top: null, accessory: null };
+            updateCritterDisplay();
+            showStep('bottoms');
+        }
+
+        function selectBottoms(type) {
+            selections.bottoms = type;
+            selections.top = null;
+            selections.accessory = null;
+            updateCritterDisplay();
+            showStep('top');
+        }
+
+        function selectTop(type) {
+            selections.top = type;
+            selections.accessory = null;
+            updateCritterDisplay();
+            showStep('accessory');
+        }
+
+        function selectAccessory(type) {
+            selections.accessory = type;
+            updateCritterDisplay();
+            showStep('final');
+            finalMessage.textContent = "Congratulations, here is your classy critter!";
+            playAgainPrompt.classList.remove('hidden');
+            finalTitleContainer.classList.add('hidden');
+            mainTitle.classList.remove('hidden');
+        }
+
+        function handlePlayAgain(choice) {
+            if (choice) {
+                selections = { animal: null, bottoms: null, top: null, accessory: null };
+                updateCritterDisplay();
+                mainTitle.classList.remove('hidden');
+                showStep('animal');
+                document.querySelectorAll('.choice-button').forEach(btn => btn.classList.remove('selected'));
+            } else {
+                playAgainPrompt.classList.add('hidden');
+                finalTitleContainer.classList.remove('hidden');
+                finalMessage.textContent = "";
+                stepTitle.textContent = "";
+                mainTitle.classList.add('hidden');
+            }
+        }
+
+        window.onload = () => {
+            showStep('animal');
+            updateCritterDisplay();
+        };
+
+    </script>
+
+</body>
+</html>

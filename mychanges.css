@@ -1,0 +1,45 @@
+.correct{
+text-align: center;
+   
+}
+
+ul{
+    margin-left: 50px;
+}
+.li{
+    margin-left: 50px;
+}
+div{
+    margin-left: 50px;
+}
+.edu{
+    margin-left: 50px;
+}
+.odu{
+    margin-left: 5px;
+}
+.res{
+    font-size: 60px;
+    text-align: center;
+}
+.home{
+    color: rgb(255, 255, 255) !important;
+}
+.name{
+    color: rgb(54, 54, 113);
+    font-weight: bold;
+
+}
+.nobold{
+    font-weight: lighter;
+}
+.center{
+    text-align: center;
+    color: rgb(54, 54, 113);
+    font-family: 'Courier New', Courier, monospace;
+}
+.fam{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: lighter;
+    text-align: center;
+}
